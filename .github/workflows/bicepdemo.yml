@@ -2,7 +2,7 @@ on:
   push:
     paths:
       - "**.bicepparam"
-name: Azure ARM
+name: Deploy to Azure
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
