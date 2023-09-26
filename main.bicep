@@ -20,7 +20,7 @@ targetScope = 'subscription'
 
 // Resource Groups
 module prodRgDeployCore './modules/nt/resourcegroupnt.bicep' ={
-  name: 'prod_deploy_abbr-rg_func-core_it-${iteration}'
+  name: 'deploy_abbr-rg_func-core_it-${iteration}'
   params: {
     function: 'core'
     indexNumber: '001'
@@ -33,7 +33,7 @@ module prodRgDeployCore './modules/nt/resourcegroupnt.bicep' ={
 
 // Deploy the storage account for the AVD resources.
 module kiloSt './modules/nt/storageaccountnt.bicep' = {
-  name: 'kilo_deploy_abbr-st_func-${'core'}_it-${iteration}'
+  name: 'deploy_abbr-st_func-${'core'}_it-${iteration}'
   params: {
     function: 'core'
     scope: prodRgDeployCore.outputs.resourceGroupName
