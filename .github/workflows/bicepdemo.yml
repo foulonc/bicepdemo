@@ -3,10 +3,12 @@ on:
   push:
     paths:
       - "**.bicepparam"
+
 name: Deploy to Azure
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: prod
     steps:
 
       # Checkout code
@@ -28,4 +30,4 @@ jobs:
         template: ./main.bicep
         parameters: './parameters/main.bicepparam'
         failOnStdErr: false
-        environment: 'prod'
+        environment: $env:ENV

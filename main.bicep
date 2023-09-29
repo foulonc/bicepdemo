@@ -10,8 +10,8 @@ param iteration string = 'nan'
 @description('The owner of the resources that are deployed.')
 param owner string = 'cfln'
 
-@description('Array of fslogix applications to deploy')
-param fslogixShares array = []
+// @description('Array of fslogix applications to deploy')
+// param fslogixShares array = []
 
 // Target Scope
 targetScope = 'subscription'
@@ -32,15 +32,15 @@ module prodRgDeployCore './modules/nt/resourcegroupnt.bicep' ={
 }
 
 // Deploy the storage account for the AVD resources.
-module kiloSt './modules/nt/storageaccountnt.bicep' = {
-  name: 'deploy_abbr-st_func-${'core'}_it-${iteration}'
-  params: {
-    function: 'core'
-    scope: prodRgDeployCore.outputs.resourceGroupName
-    fileShares: fslogixShares
-    allowBlobPublicAccess: false
-    resourceDescription: 'Storage account for FSLogix file shares.'
-    environment: environment
-  }
-}
+// module kiloSt './modules/nt/storageaccountnt.bicep' = {
+//   name: 'deploy_abbr-st_func-${'core'}_it-${iteration}'
+//   params: {
+//     function: 'core'
+//     scope: prodRgDeployCore.outputs.resourceGroupName
+//     fileShares: fslogixShares
+//     allowBlobPublicAccess: false
+//     resourceDescription: 'Storage account for FSLogix file shares.'
+//     environment: environment
+//   }
+// }
 
