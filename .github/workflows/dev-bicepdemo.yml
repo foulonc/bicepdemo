@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "**.bicepparam"
+      - "dev.bicepparam"
 
 name: DEV-Deploy to Azure
 jobs:

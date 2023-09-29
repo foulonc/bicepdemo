@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "**.bicepparam"
+      - "prod.bicepparam"
 
 name: PROD-Deploy to Azure
 jobs:
