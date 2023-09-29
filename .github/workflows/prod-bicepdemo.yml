@@ -29,5 +29,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
-        parameters: ./parameters/main.bicepparam environment=$env:ENV
+        parameters: ./parameters/main.bicepparam environment=prod
         failOnStdErr: false
