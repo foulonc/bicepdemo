@@ -1,0 +1,67 @@
+on:
+  workflow_dispatch:
+
+name: DEV-Deploy to Azure
+jobs:
+  login-and-deploy-DEV:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
+    - name: DEV:deploy to azure
+      uses: azure/arm-deploy@v1
+      with:
+        deploymentName: dev-deployment
+        scope: subscription
+        region: 'northeurope'
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./main.bicep
+        parameters:  environment=dev location=northeurope
+        failOnStdErr: false
+
+    - uses: trstringer/manual-approval@v1
+      with: 
+        approvers: foulonc
+        minimum-approvals: 1
+        issue-title: "Deploying dev to prod"
+        issue-body: "Please approve or deny the deployment of dev."
+        exclude-workflow-initiator-as-approver: false
+
+
+  login-and-deploy-PROD:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
+    - name: PROD:deploy to azure
+      uses: azure/arm-deploy@v1
+      with:
+        deploymentName: prod-deployment
+        scope: subscription
+        region: 'westeurope'
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./main.bicep
+        parameters:  environment=prod location=westeurope
+        failOnStdErr: false
