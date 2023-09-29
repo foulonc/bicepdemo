@@ -1,7 +1,7 @@
 using '../main.bicep'
 
 param location = 'westeurope'
-#param environment = 'dev'
+param environment = 'dev'
 param fslogixShares = [ {
     share: 'fslogix-office2'
     quota: 145
