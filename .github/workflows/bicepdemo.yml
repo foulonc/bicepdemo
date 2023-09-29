@@ -56,7 +56,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
         parameters:  environment=prod location=westeurope
-        additionalArguments: "--what-if --rollback-on-error --what-if-exclude-change-types Create Ignore"
+        additionalArguments: "--what-if"
         failOnStdErr: false
     
               # Deploy Bicep file
