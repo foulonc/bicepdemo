@@ -31,10 +31,9 @@ jobs:
         parameters:  environment=${{ vars.ENV }} location=northeurope
         failOnStdErr: false
 
-  login-and-deploy-PROD:
+  login-and-deploy-WhatIf:
     needs: login-and-deploy-DEV
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       # Checkout code dev   
     - name: checkout
@@ -56,11 +55,27 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
-        parameters:  environment=${{ vars.ENV }} location=westeurope
+        parameters:  environment=prod location=westeurope
         additionalArguments: "--what-if"
         failOnStdErr: false
     
-              # Deploy Bicep file
+
+  login-and-deploy-PROD:
+    needs: login-and-deploy-WhatIf
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
     - name: PROD:deploy to azure
       uses: azure/arm-deploy@v1
       with:
@@ -70,5 +85,5 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
-        parameters:  environment=prod location=westeurope
+        parameters:  environment=${{ vars.ENV }} location=westeurope
         failOnStdErr: false
