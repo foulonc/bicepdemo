@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
     #todo environment variables gebruiken
 
-name: DEV-Deploy to Azure
+name: Deploy to Azure
 jobs:
   login-and-deploy-DEV:
     runs-on: ubuntu-latest
