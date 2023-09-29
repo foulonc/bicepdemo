@@ -23,7 +23,7 @@ jobs:
     - name: deploy
       uses: azure/arm-deploy@v1
       with:
-        name: $env:ENV'-deployment'
+        name: $env:ENV
         scope: subscription
         region: 'westeurope'
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
