@@ -8,7 +8,7 @@ jobs:
     environment: dev
     steps:
       # Checkout code    
-    - name: login
+    - name: checkout
       uses: actions/checkout@main
 
       # Log into Azure
