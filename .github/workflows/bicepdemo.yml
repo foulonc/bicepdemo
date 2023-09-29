@@ -58,6 +58,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
         parameters:  environment=prod location=westeurope
+        additionalArguments: "--what-if"
         failOnStdErr: false
     
   ###### Deploy to PROD after aproval #####
