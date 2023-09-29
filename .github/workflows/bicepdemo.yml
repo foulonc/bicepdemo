@@ -1,5 +1,6 @@
 on:
   workflow_dispatch:
+    #todo environment variables gebruiken
 
 name: DEV-Deploy to Azure
 jobs:
