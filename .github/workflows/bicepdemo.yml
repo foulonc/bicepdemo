@@ -45,7 +45,7 @@ jobs:
     - name: login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
 
       # Deploy Bicep file
     - name: PROD-What-If:deploy to azure
@@ -54,7 +54,7 @@ jobs:
         deploymentName: ${{ vars.ENV }}-deployment
         scope: subscription
         region: 'westeurope'
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
         parameters:  environment=${{ vars.ENV }} location=westeurope
@@ -74,7 +74,7 @@ jobs:
     - name: login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
 
       # Deploy Bicep file
     - name: PROD:deploy to azure
@@ -83,7 +83,7 @@ jobs:
         deploymentName: ${{ vars.ENV }}-deployment
         scope: subscription
         region: 'westeurope'
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
         parameters:  environment=${{ vars.ENV }} location=westeurope
