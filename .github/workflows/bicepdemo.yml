@@ -30,15 +30,6 @@ jobs:
         parameters:  environment=dev location=northeurope
         failOnStdErr: false
 
-    - uses: trstringer/manual-approval@v1
-      with: 
-        secret: ${{ github.TOKEN }}
-        approvers: foulonc
-        minimum-approvals: 1
-        issue-title: "Deploying dev to prod"
-        issue-body: "Please approve or deny the deployment of dev."
-        exclude-workflow-initiator-as-approver: false
-
   login-and-deploy-PROD:
     needs: login-and-deploy-DEV
     runs-on: ubuntu-latest
