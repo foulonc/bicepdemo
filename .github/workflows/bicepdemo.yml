@@ -49,7 +49,7 @@ jobs:
     - name: PROD-WHAT-IF:deploy to azure
       uses: azure/arm-deploy@v1
       with:
-        deploymentName: prod-deployment
+        deploymentName: whatif-deployment
         scope: subscription
         region: 'westeurope'
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
