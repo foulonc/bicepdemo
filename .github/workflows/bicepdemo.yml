@@ -23,7 +23,7 @@ jobs:
       with:
         deploymentName: dev-deployment
         scope: subscription
-        region: 'northeurope'
+        region: 'westeurope'
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
