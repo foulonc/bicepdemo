@@ -23,12 +23,11 @@ jobs:
     - name: deploy
       uses: azure/arm-deploy@v1
       with:
-        name: ${{ vars.ENV }} - deployment
         deploymentName: ${{ vars.ENV }}-deployment
         scope: subscription
         region: 'westeurope'
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
-        parameters: environment=${{ vars.ENV }} ./parameters/${{ vars.ENV }}.bicepparam
+        parameters:  ./parameters/dev.bicepparam environment=${{ vars.ENV }}
         failOnStdErr: false
