@@ -33,6 +33,7 @@ jobs:
     - uses: trstringer/manual-approval@v1
       with: 
         approvers: foulonc
+        timeout-minutes: 60
         minimum-approvals: 1
         issue-title: "Deploying dev to prod"
         issue-body: "Please approve or deny the deployment of dev."
