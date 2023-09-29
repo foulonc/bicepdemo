@@ -20,7 +20,7 @@ targetScope = 'subscription'
 
 // Resource Groups
 module prodRgDeployCore './modules/nt/resourcegroupnt.bicep' ={
-  name: 'deploy_abbr-rg_func-core_it-${iteration}'
+  name: 'deploy_abbr-rg_func-core_it-${iteration}-${environment}'
   params: {
     function: 'core'
     indexNumber: '001'
