@@ -11,7 +11,7 @@ jobs:
     steps:
       # Checkout code dev   
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
 
       # Log into Azure
     - name: login
@@ -39,7 +39,7 @@ jobs:
     steps:
       # Checkout code dev   
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
 
       # Log into Azure
     - name: login
@@ -68,7 +68,7 @@ jobs:
     steps:
       # Checkout code dev   
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@main
 
       # Log into Azure
     - name: login
