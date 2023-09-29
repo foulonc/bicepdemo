@@ -48,7 +48,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
 
       # Deploy Bicep file
-    - name: PROD-What-If:deploy to azure
+    - name: What-If:deploy to azure Production
       uses: azure/arm-deploy@v1
       with:
         deploymentName: what-if-deployment
