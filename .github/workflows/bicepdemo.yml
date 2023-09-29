@@ -40,6 +40,7 @@ jobs:
 
 
   login-and-deploy-PROD:
+    needs: login-and-deploy-DEV
     runs-on: ubuntu-latest
     environment: prod
     steps:
