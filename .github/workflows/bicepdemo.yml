@@ -51,13 +51,13 @@ jobs:
     - name: PROD-What-If:deploy to azure
       uses: azure/arm-deploy@v1
       with:
-        deploymentName: ${{ vars.ENV }}-deployment
+        deploymentName: what-if-deployment
         scope: subscription
         region: 'westeurope'
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./main.bicep
-        parameters:  environment=${{ vars.ENV }} location=westeurope
+        parameters:  environment=prod location=westeurope
         failOnStdErr: false
     
   ###### Deploy to PROD after aproval #####
