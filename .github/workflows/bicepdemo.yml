@@ -28,4 +28,4 @@ jobs:
         template: ./main.bicep
         parameters: './parameters/main.bicepparam'
         failOnStdErr: false
-        environment: 'dev'
+        environment: 'prod'
