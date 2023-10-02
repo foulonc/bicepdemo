@@ -8,8 +8,8 @@ env:
 input:
   pathIgnore:
   - './github'
-  - '!/*.bicepparam'
-  - '!/*.bicep'
+  - '!**/*.bicepparam'
+  - '!**/*.bicep'
 
 configuration:
   # Enable expansion of Azure Template files.
