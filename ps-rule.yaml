@@ -4,19 +4,19 @@ requires:
 
 configuration:
   # Enable expansion of Azure Template files.
-  AZURE_PARAMETER_FILE_EXPANSION: true
+  AZURE_BICEP_PARAMS_FILE_EXPANSION: true
 
   # Enable expansion of Azure Bicep files.
-  AZURE_BICEP_FILE_EXPANSION: true
+  # AZURE_BICEP_FILE_EXPANSION: true
 
   # Configure the timeout for bicep build to 15 seconds.
-  AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 15
+  # AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 15
 
   # Enable Bicep CLI checks.
   AZURE_BICEP_CHECK_TOOL: true
 
   # Optionally, configure the minimum version of the Bicep CLI.
-  AZURE_BICEP_MINIMUM_VERSION: '0.16.2'
+  # AZURE_BICEP_MINIMUM_VERSION: '0.16.2'
 
   # Configure the minimum AKS cluster version.
   AZURE_AKS_CLUSTER_MINIMUM_VERSION: '1.26.6'
