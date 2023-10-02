@@ -2,6 +2,13 @@ requires:
   # Require a minimum of PSRule for Azure v1.29.0
   PSRule.Rules.Azure: '>=1.29.0'
 
+env:
+  PSRULE_AZURE_BICEP_USE_AZURE_CLI: true
+
+input:
+  pathIgnore:
+  - './github'
+
 configuration:
   # Enable expansion of Azure Template files.
   AZURE_BICEP_PARAMS_FILE_EXPANSION: true
