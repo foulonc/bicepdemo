@@ -1,0 +1,111 @@
+on:
+  workflow_dispatch:
+    #todo environment variables gebruiken
+
+name: Deploy to Azure with psrule
+jobs:
+  ###### Deploy to DEV #####
+  login-and-deploy-DEV:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+    - name: Run PSRule analysis
+      uses: microsoft/ps-rule@main
+      with:
+        inputType: inputPath                             # Optional. Determines the type of input to use for PSRule.
+        inputPath: './'                                            # Optional. The path PSRule will look for files to validate.
+        modules: string                                              # Optional. A comma separated list of modules to use for analysis.
+        source: string                                               # Optional. A path containing rules to use for analysis.
+        baseline: string                                             # Optional. The name of a PSRule baseline to use.
+        conventions: string                                          # Optional. A comma separated list of conventions to use.
+        option: string                                               # Optional. The path to an options file.
+        outcome: Fail, Pass, Error, Processed, Problem, All          # Optional. Filters output to include results with the specified outcome.
+        outputFormat: None, Yaml, Json, NUnit3, Csv, Markdown, Sarif # Optional. The format to use when writing results to disk.
+        outputPath: string                                           # Optional. The file path to write results to.
+        path: string                                                 # Optional. The working directory PSRule is run from.
+        prerelease: boolean                                          # Optional. Determine if a pre-release module version is installed.
+        repository: string                                           # Optional. The name of the PowerShell repository where PSRule modules are installed from.
+        summary: boolean                                             # Optional. Determines if a job summary is written.
+        version: string                                              # Optional. The specific version of PSRule to use.
+
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy Bicep file
+    - name: DEV:deploy to azure
+      uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ vars.ENV }}-deployment
+        scope: subscription
+        region: 'westeurope'
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./main.bicep
+        parameters:  environment=${{ vars.ENV }} location=northeurope
+        failOnStdErr: false
+
+  ###### What if deploy PROD #####
+  login-and-deploy-WhatIf:
+    needs: login-and-deploy-DEV
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
+
+      # Deploy Bicep file
+    - name: What-If:deploy to azure Production
+      uses: azure/arm-deploy@v1
+      with:
+        deploymentName: what-if-deployment
+        scope: subscription
+        region: 'westeurope'
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./main.bicep
+        parameters:  environment=prod location=westeurope
+        additionalArguments: "--what-if"
+        failOnStdErr: false
+    
+  ###### Deploy to PROD after aproval #####
+  login-and-deploy-PROD:
+    needs: login-and-deploy-WhatIf
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      # Checkout code dev   
+    - name: checkout
+      uses: actions/checkout@main
+
+      # Log into Azure
+    - name: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
+
+      # Deploy Bicep file
+    - name: PROD:deploy to azure
+      uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ vars.ENV }}-deployment
+        scope: subscription
+        region: 'westeurope'
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./main.bicep
+        parameters:  environment=${{ vars.ENV }} location=westeurope
+        failOnStdErr: false
