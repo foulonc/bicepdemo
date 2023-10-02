@@ -16,10 +16,7 @@ jobs:
       - name: Run PSRule analysis
         uses: microsoft/ps-rule@main
         with:
-          inputType: inputPath                                # Optional. Determines the type of input to use for PSRule.
-          inputPath: "./" # Optional. The path PSRule will look for files to validate.
-          outcome: All # Optional. Filters output to include results with the specified outcome.
-          outputFormat: Markdown # Optional. The format to use when writing results to disk.
+          modules: 'PSRule.Rules.Azure'
 
         # Log into Azure
       - name: login
