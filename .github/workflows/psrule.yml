@@ -17,7 +17,8 @@ jobs:
         uses: microsoft/ps-rule@latest
         with:
           modules: 'PSRule.Rules.Azure'
-          inputPath: 'modules/nt/resourcegroupnt/testing/'
+          inputPath: 'modules/nt/resourcegroupnt/'
+          pathIgnore: '!**/testing.bicep'
 
         # Log into Azure
       - name: login

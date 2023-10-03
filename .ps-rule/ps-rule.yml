@@ -36,8 +36,7 @@ input:
   ignoreRepositoryCommon: true
   ignoreUnchangedPath: false
   objectPath: null
-  pathIgnore:
-    - - '!**/testing.bicep'
+  pathIgnore: []
   targetType: [ ]
 
 # Configures outcome logging options
