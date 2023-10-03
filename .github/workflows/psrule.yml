@@ -18,7 +18,7 @@ jobs:
         with:
           modules: 'PSRule.Rules.Azure'
           # inputPath: '.ps-rule/rule.yml'
-          inputPath: '.modules/nt/resourcegroupnt/testing/resourcegroup.testing.bicep'
+          inputPath: 'modules/nt/resourcegroupnt/testing/resourcegroup.testing.bicep'
 
         # Log into Azure
       - name: login
