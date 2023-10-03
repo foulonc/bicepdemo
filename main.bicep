@@ -19,7 +19,7 @@ targetScope = 'subscription'
 // Variables
 
 // Resource Groups
-module prodRgDeployCore './modules/nt/resourcegroupnt.bicep' ={
+module prodRgDeployCore './modules/nt/resourcegroupnt/resourcegroupnt.bicep' ={
   name: 'deploy_-rg_func-core_it-${iteration}_env-${environment}'
   params: {
     function: 'core'

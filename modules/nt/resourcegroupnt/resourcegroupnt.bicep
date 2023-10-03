@@ -44,7 +44,7 @@ var resourceGroup = {
 }
 
 // Code
-module ntNameRg './naming.bicep' = {
+module ntNameRg '../naming.bicep' = {
   name: 'nt_name_abbr-${resourceTypeAbbreviation}_func-${function}_it-${iteration}'
   params: {
     resourceTypeAbbreviation: resourceTypeAbbreviation
@@ -55,7 +55,7 @@ module ntNameRg './naming.bicep' = {
   }
 }
 
-module ntTagRg './tagging.bicep' = {
+module ntTagRg '../tagging.bicep' = {
   name: 'nt_tag_abbr-${resourceTypeAbbreviation}_func-${function}_it-${iteration}'
   params: {
     environment: resourceGroup.tags.environment
@@ -63,7 +63,7 @@ module ntTagRg './tagging.bicep' = {
   }
 }
 
-module ntRg '../raw/resourcegroup.bicep' = {
+module ntRg '../../raw/resourcegroup.bicep' = {
   name: 'nt_deploy_abbr-${resourceTypeAbbreviation}_func-${function}_it-${iteration}'
   params: {
     resourceGroup: resourceGroup
