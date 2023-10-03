@@ -14,10 +14,10 @@ configuration:
   AZURE_BICEP_PARAMS_FILE_EXPANSION: true
 
   # Enable expansion of Azure Bicep files.
-  # AZURE_BICEP_FILE_EXPANSION: true
+  AZURE_BICEP_FILE_EXPANSION: true
 
   # Configure the timeout for bicep build to 15 seconds.
-  # AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 15
+  AZURE_BICEP_FILE_EXPANSION_TIMEOUT: 15
 
   # Enable Bicep CLI checks.
   AZURE_BICEP_CHECK_TOOL: true
