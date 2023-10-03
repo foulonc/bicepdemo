@@ -32,7 +32,7 @@ rule:
 input:
   pathIgnore:
   # Include only testing.bicep
-  - '!**/testing.bicep'
+  - '!**/*.testing.bicep'
 
 
 suppression:
