@@ -1,83 +1,25 @@
-#
-# PSRule defaults
-#
-
-# Note: Only properties that differ from the default values need to be specified.
-
-# Configure required module versions
-requires: { }
-
-# Configure convention options
-convention:
-  include: [ ]
-
-# Configure execution options
-execution:
-  aliasReference: Warn
-  duplicateResourceId: Error
-  invariantCulture: Warn
-  languageMode: FullLanguage
-  ruleInconclusive: Warn
-  ruleSuppressed: Warn
-  suppressionGroupExpired: Warn
-  unprocessedObject: Warn
-
-# Configure include options
 include:
-  module: [ ]
-  path:
-  - '.ps-rule/'
-
-# Configures input options
+  module:
+    # Import all the Azure Well-Architected Framework rules
+    - PSRule.Rules.Azure
+ 
+configuration:
+  # Enable code analysis of bicep files
+  AZURE_BICEP_FILE_EXPANSION: true
+  # Validate that the bicep CLI is used
+  AZURE_BICEP_CHECK_TOOL: true
+ 
 input:
-  format: Detect
-  ignoreGitPath: true
-  ignoreObjectSource: false
-  ignoreRepositoryCommon: true
-  ignoreUnchangedPath: false
-  objectPath: null
-  pathIgnore: []
-  targetType: [ ]
-
-# Configures outcome logging options
-logging:
-  limitDebug: [ ]
-  limitVerbose: [ ]
-  ruleFail: None
-  rulePass: None
-
+  pathIgnore:
+  # Exclude module files
+  - '**/*.bicep'
+  # Include test files for modules
+  - '!**/*.testing.bicep'
+ 
+execution:
+  # Disable warnings that files cannot be processed
+  notProcessedWarning: false
+   
 output:
-  as: Detail
-  banner: Default
-  culture: [ ]
-  encoding: Default
-  footer: Default
-  format: None
-  jobSummaryPath: null
-  outcome: Processed
-  sarifProblemsOnly: true
-  style: Detect
-
-# Configure rule suppression
-suppression: { }
-
-# Configure baseline options
-binding:
-  field: { }
-  ignoreCase: true
-  nameSeparator: '/'
-  preferTargetInfo: false
-  targetName:
-  - TargetName
-  - Name
-  targetType:
-  - PSObject.TypeNames[0]
-  useQualifiedName: false
-
-configuration: { }
-
-rule:
-  include: [ ]
-  includeLocal: false
-  exclude: [ ]
-  tag: { }
+  # Show results for rules with the Fail, Pass, or Error outcome
+  outcome: 'Processed'
