@@ -1,0 +1,97 @@
+on:
+  workflow_dispatch:
+    #todo environment variables gebruiken
+
+name: Deploy to Azure with psrule
+jobs:
+  ###### Deploy to DEV #####
+  login-and-deploy-DEV:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # Checkout code dev
+      - name: checkout
+        uses: actions/checkout@main
+
+      - name: Run PSRule analysis
+        uses: microsoft/ps-rule@latest
+        with:
+          modules: 'PSRule.Rules.Azure'
+          inputPath: '../ps-rule/psrule.yml'
+
+        # Log into Azure
+      - name: login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy Bicep file
+      - name: DEV:deploy to azure
+        uses: azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ vars.ENV }}-deployment
+          scope: subscription
+          region: "westeurope"
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./main.bicep
+          parameters: environment=${{ vars.ENV }} location=northeurope
+          failOnStdErr: false
+
+  ###### What if deploy PROD #####
+  login-and-deploy-WhatIf:
+    needs: login-and-deploy-DEV
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code dev
+      - name: checkout
+        uses: actions/checkout@main
+
+        # Log into Azure
+      - name: login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
+
+        # Deploy Bicep file
+      - name: What-If:deploy to azure Production
+        uses: azure/arm-deploy@v1
+        with:
+          deploymentName: what-if-deployment
+          scope: subscription
+          region: "westeurope"
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./main.bicep
+          parameters: environment=prod location=westeurope
+          additionalArguments: "--what-if"
+          failOnStdErr: false
+
+  ###### Deploy to PROD after aproval #####
+  login-and-deploy-PROD:
+    needs: login-and-deploy-WhatIf
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      # Checkout code dev
+      - name: checkout
+        uses: actions/checkout@main
+
+        # Log into Azure
+      - name: login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_PRODDEMO }}
+
+        # Deploy Bicep file
+      - name: PROD:deploy to azure
+        uses: azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ vars.ENV }}-deployment
+          scope: subscription
+          region: "westeurope"
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_PRODDEMO }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: ./main.bicep
+          parameters: environment=${{ vars.ENV }} location=westeurope
+          failOnStdErr: false
