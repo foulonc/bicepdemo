@@ -31,7 +31,9 @@ rule:
 
 input:
   pathIgnore:
-  # Include only testing.bicep
+  # Exclude all files
+  - '*'
+  # Only process testing.bicep files
   - '!**/*.testing.bicep'
 
 
