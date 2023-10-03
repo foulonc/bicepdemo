@@ -14,9 +14,10 @@ jobs:
         uses: actions/checkout@main
 
       - name: Run PSRule analysis
-        uses: microsoft/ps-rule@main
+        uses: microsoft/ps-rule@latest
         with:
           modules: 'PSRule.Rules.Azure'
+          inputPath: '../ps-rule/ps-rule.yaml'
 
         # Log into Azure
       - name: login
