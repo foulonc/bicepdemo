@@ -1,7 +1,7 @@
 @description('The location where all resources will be deployed.')
 param location string
 
-@description('The type of environment that will be deployed for the customer.')
+@description('The type of environment that will be deployed for the customer')
 param environment string = 'tst'
 
 @description('The iteration number is used to make all deployment names unique, this allows for parallel deployment of virtual machines and all supporting resources.')
